@@ -5,8 +5,8 @@ const app = express();
 const productRouter = require("./app/product/product.route");
 const supplierRouter = require("./app/supplier/supplier.route");
 const salesRouter = require("./app/sales/sales.route");
-const {getProducts} = require("./app/product/product.service");
 const pool = require("./common/db/db");
+const reportRouter = require("./app/report/report.route");
 
 app.get('/health',async (req, res) => {
     const {rows}=await pool.query('SELECT 1+1 as result');
@@ -20,6 +20,7 @@ app.use(express.json());
 app.use('/product', productRouter);
 app.use('/supplier', supplierRouter);
 app.use('/sales', salesRouter);
+app.use('/report', reportRouter);
 app.use((req,res)=>{
     res.status(404).json({message:'invalid route',sucess:false});
 });

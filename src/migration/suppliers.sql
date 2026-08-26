@@ -7,4 +7,3 @@ CREATE TABLE suppliers
 
 ALTER TABLE suppliers ALTER COLUMN contact_number TYPE VARCHAR(15);
 
-ALTER TABLE suppliers RENAME COLUMN  TO contact_number;
