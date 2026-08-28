@@ -26,10 +26,30 @@ const startWithF = async (req, res, next) => {
         next(error);
     }
 };
+const neverSold = async (req, res, next) => {
+    try {
+
+        const neverSold = await reportService.neverSold();
+        res.status(201).send({message: 'report created successfully', success: true, data:neverSold});
+    } catch (error) {
+        next(error);
+    }
+};
+const allSales = async (req, res, next) => {
+    try {
+
+        const allSales = await reportService.allSales();
+        res.status(201).send({message: 'report created successfully', success: true, data:allSales});
+    } catch (error) {
+        next(error);
+    }
+};
 
 
 module.exports = {
     totalQuantityReport,
     highestStockQuantity,
-    startWithF
+    startWithF,
+    neverSold,
+    allSales,
 }

@@ -22,7 +22,31 @@ const highestStockQuantity = async () => {
 
 
 const startWithF = async () => {
-    const {rows} = await pool.query(`SELECT * FROM suppliers WHERE name ILIKE 'F%'`);
+    const {rows} = await pool.query(`SELECT *
+                                     FROM suppliers
+                                     WHERE name ILIKE 'F%'`);
+    return rows;
+}
+
+const neverSold = async () => {
+    const {rows} = await pool.query(`SELECT *
+                                     FROM products p
+                                              LEFT JOIN
+                                          sales s ON p.id = s.productId
+                                     WHERE s.productId IS NULL
+    `);
+    return rows;
+}
+const allSales = async () => {
+    const {rows} = await pool.query(`SELECT
+                                         p.name AS product_name,
+                                         s.quantitySold AS quantity_sold,
+                                         s.saleDate AS sale_date
+                                     FROM
+                                         sales s
+                                             INNER JOIN
+                                         products p ON s.productId = p.id
+    `);
     return rows;
 }
 
@@ -31,5 +55,7 @@ module.exports = {
     totalQuantityReport,
     highestStockQuantity,
     startWithF,
+    neverSold,
+    allSales,
 
 }
